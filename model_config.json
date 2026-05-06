@@ -1,0 +1,30 @@
+{
+  "model_type": "SARIMAX",
+  "order": [
+    1,
+    1,
+    1
+  ],
+  "seasonal_order": [
+    1,
+    0,
+    1,
+    7
+  ],
+  "exog_cols": [
+    "temp_avg",
+    "is_weekend",
+    "is_holiday",
+    "srp_rate",
+    "lag1"
+  ],
+  "target": "total_cost_numeric",
+  "training_period": {
+    "start": "2023-02-01",
+    "end": "2026-01-30"
+  },
+  "training_rows": 1095,
+  "aic": 2429.011,
+  "bic": 2478.987,
+  "notes": "srp_rate = blended rate weighted by actual kWh usage per day"
+}
