@@ -68,7 +68,7 @@ Knowing tomorrow's expected cost enables smarter energy decisions — pre-coolin
 
 | Model | AIC | Features |
 |-------|-----|---------|
-| Original (no srp_rate) | 2958 | temp_avg, is_weekend, lag1 |
+| Original (no srp_rate) | 2958 | temp_avg, is_weekend, is_holiday, lag1 |
 | Current (with srp_rate) | **2429** | temp_avg, is_weekend, is_holiday, srp_rate, lag1 |
 
 Lower AIC = better fit. Adding `srp_rate` improved AIC by **529 points**.
@@ -88,8 +88,7 @@ Lower AIC = better fit. Adding `srp_rate` improved AIC by **529 points**.
 ## Project Structure
 
 ```
-├── notebook.ipynb                    # Full pipeline — EDA, training, validation
-├── feature_engineering.py           # Reusable feature engineering module
+├── Energy_cost_forecasting.ipynb    # Full pipeline — EDA, training, validation
 ├── cost_forecast_model_latest.pkl   # Trained SARIMAX model
 ├── model_config.json                # Model configuration and metadata
 └── README.md
@@ -97,26 +96,14 @@ Lower AIC = better fit. Adding `srp_rate` improved AIC by **529 points**.
 
 ---
 
-## Feature Engineering Pipeline
+## How to Run
 
-The `feature_engineering.py` module handles both training and validation data with a single reusable function:
+1. Upload your SRP CSV files to Colab:
+   - `dailyUsage_<date_range>.csv`
+   - `dailyCost_<date_range>.csv`
 
-```python
-from feature_engineering import build_features, EXOG_COLS
-
-# Training
-df_train = build_features(
-    usage_filepath='dailyUsage_train.csv',
-    cost_filepath='dailyCost_train.csv'
-)
-
-# Validation — pass last known cost before window starts
-df_val = build_features(
-    usage_filepath='dailyUsage_val.csv',
-    cost_filepath='dailyCost_val.csv',
-    lag1_seed=1.34   # last known cost before validation window
-)
-```
+2. Open `Energy_cost_forecasting.ipynb` in Google Colab
+3. Run all cells in order
 
 ---
 
